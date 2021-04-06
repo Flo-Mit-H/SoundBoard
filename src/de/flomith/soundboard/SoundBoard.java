@@ -6,6 +6,8 @@ import de.flomith.soundboard.util.ToggleButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SoundBoard {
 
@@ -47,12 +49,19 @@ public class SoundBoard {
         alwaysOnTopButton.setDisabledIcon(aat);
         alwaysOnTopButton.setIcon(aat);
         alwaysOnTopButton.setBounds(50, 15, aat.getIconWidth(), aat.getIconHeight());
-        alwaysOnTopButton.setBackground(Color.WHITE);
+        alwaysOnTopButton.setBackgroundColor(Color.WHITE);
         alwaysOnTopButton.setHoveredBackgroundColor(Color.WHITE);
         alwaysOnTopButton.setPressedBackgroundColor(Color.CYAN);
         alwaysOnTopButton.setTriggeredBackgroundColor(Color.CYAN);
-        alwaysOnTopButton.setTriggeredButton(true);
+        alwaysOnTopButton.setTriggeredButton(false);
         alwaysOnTopButton.setVisible(true);
+        alwaysOnTopButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                jf.setAlwaysOnTop(alwaysOnTopButton.isTriggered());
+            }
+        });
         panel.add(alwaysOnTopButton);
 
         jf.setVisible(true);
@@ -66,18 +75,6 @@ public class SoundBoard {
             Data.posX = jf.getLocation().x;
             Data.posY = jf.getLocation().y;
             panel.setSize(Data.screenWidth, Data.screenHeight);
-        }
-    }
-
-    public static void addSound(Button button) {
-        Data.sounds.add(button);
-    }
-
-    public static void updateButtons() {
-        for(Button curr : Data.sounds) {
-
-            curr.setVisible(true);
-
         }
     }
 

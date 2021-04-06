@@ -12,22 +12,19 @@ public class ToggleButton extends JToggleButton {
     private Color hoveredBackgroundColor = Color.DARK_GRAY.brighter();
     private Color pressedBackgroundColor = Color.LIGHT_GRAY.darker();
     private Color triggeredBackgroundColor = Color.CYAN;
+    private Color background;
 
     public ToggleButton() {
         this(null);
     }
 
     public ToggleButton(String text) {
-        this(text, false);
-    }
-
-    public ToggleButton(String text, boolean triggered) {
         super(text);
-        this.triggered = triggered;
         super.setContentAreaFilled(false);
         setBounds(0, 0, 150, 150);
-        setBackground(Color.DARK_GRAY.brighter());
+        setBackgroundColor(Color.DARK_GRAY.brighter());
         setForeground(Color.WHITE);
+        background = Color.DARK_GRAY.brighter();
         setFocusPainted(false);
         setBorder(null);
         addMouseListener(new MouseAdapter() {
@@ -35,7 +32,6 @@ public class ToggleButton extends JToggleButton {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
                 setTriggeredButton(!triggered);
-                System.out.println(triggered);
             }
         });
     }
@@ -87,9 +83,16 @@ public class ToggleButton extends JToggleButton {
         return triggered;
     }
 
+    public void setBackgroundColor(Color background) {
+        super.setBackground(background);
+        this.background = background;
+    }
+
     public void setTriggeredButton(boolean triggered) {
         this.triggered = triggered;
-        Color bg = triggered ? triggeredBackgroundColor : getBackground();
+        Color bg = Color.WHITE;
+        if(triggered)
+            bg = triggeredBackgroundColor;
         setBackground(bg);
     }
 
