@@ -1,0 +1,33 @@
+
+A
+java:S1444"+Make this "public static panel" field final(ùÙ´Ã
+F
+java:S1444"0Make this "public static soundPanel" field final(ùÙ´Ã
+F
+java:S1444"0Make this "public static scrollPane" field final(îéÙ­
+I
+java:S1444".Make this "public static rowCount" field final(ë—®Ýùÿÿÿÿ
+L
+java:S1444"1Make this "public static soundsCount" field final(ë—®Ýùÿÿÿÿ
+B
+java:S1444",Make this "public static sounds" field final(ú¶žØ
+g
+java:S1104"QMake panel a static final constant or non-public and provide accessors if needed.(ùÙ´Ã
+l
+java:S1104"VMake soundPanel a static final constant or non-public and provide accessors if needed.(ùÙ´Ã
+l
+java:S1104"VMake scrollPane a static final constant or non-public and provide accessors if needed.(îéÙ­
+o
+java:S1104"TMake rowCount a static final constant or non-public and provide accessors if needed.(ë—®Ýùÿÿÿÿ
+r
+java:S1104"WMake soundsCount a static final constant or non-public and provide accessors if needed.(ë—®Ýùÿÿÿÿ
+h
+java:S1104"RMake sounds a static final constant or non-public and provide accessors if needed.(ú¶žØ
+>
+java:S1659"(Declare "soundPanel" on a separate line.(ùÙ´Ã
+D
+java:S1659")Declare "soundsCount" on a separate line.(ë—®Ýùÿÿÿÿ
+3
+java:S2386"Make this member "protected".(ú¶žØ
+_
+java:S3252 "IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(É’­Ÿ

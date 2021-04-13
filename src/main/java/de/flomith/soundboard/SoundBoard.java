@@ -1,29 +1,31 @@
 package de.flomith.soundboard;
 
-import de.flomith.soundboard.util.Data;
+import de.flomith.soundboard.util.*;
 import de.flomith.soundboard.util.Button;
-import de.flomith.soundboard.util.Sound;
-import de.flomith.soundboard.util.ToggleButton;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SoundBoard {
 
     private static JFrame jf;
-    public static JPanel panel;
-    public static JScrollPane soundPanel;
+    public static JPanel panel, soundPanel;
+    public static JScrollPane scrollPane;
     public static int rowCount = 0, soundsCount;
     public static List<Sound> sounds = new ArrayList<>();
 
     public static void main(String[] args) {
         initWindow();
         updateWindow();
+        FileSaver.load();
     }
 
     private static void initWindow() {
@@ -39,7 +41,7 @@ public class SoundBoard {
         panel.setBounds(0, 0, Data.screenWidth, Data.screenHeight);
         panel.setLayout(null);
         panel.setBackground(Color.DARK_GRAY);
-        jf.add(panel);
+        jf.getContentPane().add(panel);
 
         Button addButton = new Button("+");
         Font font = new Font("Roboto", Font.BOLD, 27);
@@ -78,12 +80,19 @@ public class SoundBoard {
         });
         panel.add(alwaysOnTopButton);
 
-        //TODO JScrollPane lernen
-        soundPanel = new JScrollPane();
-        soundPanel.setBounds(0, 50, Data.screenWidth, Data.screenHeight - 50);
+        soundPanel = new JPanel();
         soundPanel.setLayout(null);
         soundPanel.setBackground(Color.DARK_GRAY);
-        jf.add(soundPanel);
+
+        scrollPane = new JScrollPane(soundPanel);
+
+        soundPanel.setBounds(0, 0, soundPanel.getParent().getWidth(), soundPanel.getParent().getHeight());
+        soundPanel.setPreferredSize(new Dimension(soundPanel.getParent().getWidth(), soundPanel.getParent().getHeight()));
+
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        jf.getContentPane().add(scrollPane);
 
         updateWindow();
 
@@ -92,12 +101,18 @@ public class SoundBoard {
 
     public static void updateWindow() {
 
-        soundPanel.revalidate();
-        soundPanel.repaint();
-        soundPanel.revalidate();
-        panel.repaint();
         panel.revalidate();
         panel.repaint();
+        soundPanel.revalidate();
+        soundPanel.repaint();
+        jf.remove(scrollPane);
+        scrollPane = new JScrollPane(soundPanel);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setWheelScrollingEnabled(true);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(0, 50, Data.screenWidth - 50, Data.screenHeight - 100);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        jf.getContentPane().add(scrollPane);
 
     }
 
@@ -117,13 +132,23 @@ public class SoundBoard {
         }else {
             //Gerade
             rowCount++;
+            System.out.println(sounds.get(soundsCount-1).getButton().getY());
             s.getButton().setLocation(Data.screenWidth - (s.getButton().getWidth() + 100), sounds.get(soundsCount-1).getButton().getY());
         }
         soundsCount++;
+        try {
+            FileSaver.save(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         soundPanel.add(s.getButton());
-        soundPanel.revalidate();
-        soundPanel.repaint();
+        int panelSize = soundsCount * 100 + soundsCount * 50;
+        soundPanel.setSize(soundPanel.getWidth(), panelSize + 100);
+        soundPanel.setPreferredSize(new Dimension(soundPanel.getWidth(), panelSize + 100));
         updateWindow();
+
+        new Timer().schedule(new TimerTask() {@Override public void run() {soundPanel.revalidate();soundPanel.repaint();}}, 1);
+
     }
 
     public static void openSoundAddMenu() {

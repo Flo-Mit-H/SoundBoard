@@ -1,0 +1,8 @@
+
+Q	java:S110	"<This class has 6 parents which is greater than 5 authorized.(ö‘å÷
+œ
+java:S11866"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.( şßÀøÿÿÿÿ
+N
+java:S2387"3"background" is the name of a field in "Component".(‹Ê‘²ÿÿÿÿÿ
+I
+java:S1068".Remove this unused "background" private field.(‹Ê‘²ÿÿÿÿÿ
